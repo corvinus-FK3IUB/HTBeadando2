@@ -22,16 +22,41 @@ import java.awt.*;
 public class RegisterController {
 
     private final Logger logger = LoggerFactory.getLogger(RegisterController.class);
+    private final UserRepository repository;
+
 
     @Autowired
-    private UserRepository repository;
+    public RegisterController(UserRepository repository) {
+        this.repository = repository;
+    }
+
+    /*@GetMapping("/")
+    public String login() {
+        return "login";
+    }*/
 
     @GetMapping("/")
-    public String login() {
+    public String registration() {
+        return "registration";
+    }
+
+    @PostMapping("/registration")
+    public String userregistration(@ModelAttribute @Valid User user, Model model, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            logger.info("Validation errors occurred!");
+            return "registration";
+        }
+
+        final boolean userIsRegistered = repository.findById(user.getUsername()).isPresent();
+        if (!userIsRegistered) {
+            User user_inserted = repository.save(user);
+            return "login";
+        }
         return "login";
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public String userlogin(@ModelAttribute @Valid User user, Model model) {
 
         boolean userIsRegistered = repository.findById(user.getUsername()).isPresent();
@@ -44,33 +69,6 @@ public class RegisterController {
         }
     }
 
-    @GetMapping("/registration")
-    public String registration() {
-        return "registration";
-    }
 
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "welcome";
-    }
 
-    @PostMapping("/registration")
-    public String userregistration(@ModelAttribute @Valid User user, Model model, BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-        logger.info("Validation errors occurred!");
-            return "registration";
-        }
-
-        logger.info("Registering user with username: {}", user.getUsername());
-
-        boolean userIsRegistered = repository.findById(user.getUsername()).isPresent();
-        if (!userIsRegistered) {
-            User user_inserted = repository.save(user);
-            return "welcome";
-        }
-
-        return "login";
-
-    }
 }
