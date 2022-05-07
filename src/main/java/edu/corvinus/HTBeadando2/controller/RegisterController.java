@@ -70,7 +70,7 @@ public class RegisterController {
 
 
     @PostMapping("/login")
-    public String userlogin(@Valid User user, Model model) {
+    public String userlogin( Model model, @Valid User user, BindingResult bindingResult) {
 
         Optional<User> userindb = repository.findById(user.getUsername());
         boolean userIsRegistered = userindb.isPresent();
