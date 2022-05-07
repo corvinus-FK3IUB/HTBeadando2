@@ -1,0 +1,13 @@
+package edu.corvinus.HTBeadando2;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class HtBeadando2ApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
