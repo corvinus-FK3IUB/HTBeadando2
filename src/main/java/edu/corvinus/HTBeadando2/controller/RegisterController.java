@@ -86,9 +86,8 @@ public class RegisterController {
             return "/welcome";
             }
         else {
-                //JOptionPane.showMessageDialog(null, "Error");
                 logger.info("Incorrect password!");
-                model.addAttribute("pwerror","Rossz a jelszó!");
+                model.addAttribute("pwerror","Rossz a jelszó, próbálja újra!");
                 return "login";
             }
         }
