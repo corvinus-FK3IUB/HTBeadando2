@@ -9,16 +9,15 @@ import javax.validation.constraints.Pattern;
 
 @Entity
 public class User {
-
-
     //@GeneratedValue
     //private long id;
     private String firstname;
     private String lastname;
+    private String email;
+
     @Id
     @Length(min = 6, message = "The username must be at least 6 charachters!")
     private String username;
-    private String email;
 
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]{8,}+)$", message = "The password must contain at least one number and letter, and must be at least 8 charachters!")
     private String password;
